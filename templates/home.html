@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Resume Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='h_design.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+<h1><marquee>AI Resume Analyzer</marquee></h1>
+
+<p>Paste your resume below</p>
+
+<textarea id="resume" placeholder="Paste Resume Here..."></textarea>
+
+<br><br>
+
+<button onclick="analyzeResume()">Analyze Resume</button>
+
+<h2>Result</h2>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+
+async function analyzeResume(){
+
+let resume=document.getElementById("resume").value;
+
+let response=await fetch("/analyze",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+resume:resume
+})
+
+});
+
+let data=await response.json();
+
+document.getElementById("result").innerHTML=data.result;
+
+}
+
+</script>
+
+</body>
+</html>
